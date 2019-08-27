@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+                android:id="@+id/root_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#242d34">
+
+    <!-- Widget to see first person view (FPV) -->
+
+
+    <dji.ux.widget.FPVWidget
+        android:id="@+id/fpv_widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"/>
+
+    <dji.ux.widget.FPVOverlayWidget
+        android:id="@+id/fpv_overlay_widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <dji.ux.widget.MapWidget
+        android:id="@+id/map_widget"
+        android:layout_width="180dp"
+        android:layout_height="130dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="10dp"/>
+
+
+    <!-- Everything below this line will appear on top of the full-screen map widget -->
+
+
+    <!-- Widgets in top status bar -->
+    <LinearLayout
+        android:id="@+id/signal"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/dark_gray"
+
+        android:orientation="horizontal">
+
+        <dji.ux.widget.PreFlightStatusWidget
+
+            android:layout_width="180dp"
+            android:layout_height="25dp"/>
+
+        <dji.ux.widget.FlightModeWidget
+            android:layout_width="103dp"
+            android:layout_height="22dp"/>
+
+        <dji.ux.widget.GPSSignalWidget
+            android:layout_width="44dp"
+            android:layout_height="22dp"/>
+
+        <dji.ux.widget.VisionWidget
+            android:layout_width="22dp"
+            android:layout_height="22dp"/>
+
+        <dji.ux.widget.RemoteControlSignalWidget
+            android:layout_width="38dp"
+            android:layout_height="22dp"/>
+
+        <dji.ux.widget.VideoSignalWidget
+            android:layout_width="38dp"
+            android:layout_height="22dp"/>
+
+        <dji.ux.widget.WiFiSignalWidget
+            android:layout_width="32dp"
+            android:layout_height="25dp"/>
+
+        <dji.ux.widget.BatteryWidget
+            android:layout_width="96dp"
+            android:layout_height="22dp"
+            />
+
+        <dji.ux.widget.ConnectionWidget
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="3dp"/>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="飞机状态"
+        android:textSize="30sp"/>
+</RelativeLayout>
