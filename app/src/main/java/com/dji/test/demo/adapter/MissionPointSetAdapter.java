@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,7 +94,7 @@ public class MissionPointSetAdapter extends RecyclerView.Adapter<MissionPointSet
     public MissionPointSetAdapter(Context context, Waypoint mWaypoint) {
         this.mContext = context;
         this.mWaypoint = mWaypoint;
-            this.mInflater = LayoutInflater.from(mContext);
+        this.mInflater = LayoutInflater.from(mContext);
     }
 
 
@@ -118,6 +120,7 @@ public class MissionPointSetAdapter extends RecyclerView.Adapter<MissionPointSet
         int actionParam = waypointAction.actionParam;
         switch (waypointAction.actionType) {
             case STAY: //
+
                 holder.mActiveIds.setText("停留");
                 int value = actionParam / 1000;
                 holder.mActiveValue.setText(value + "");
@@ -144,12 +147,14 @@ public class MissionPointSetAdapter extends RecyclerView.Adapter<MissionPointSet
                 break;
             case ROTATE_AIRCRAFT:
                 holder.mActiveIds.setText("旋转飞机");
+                holder.mActiveValue.setHint("偏航角度在[-180,180]之间");
                 holder.mActiveValue.setEnabled(true);
                 holder.mActiveValue.setText(actionParam + "");
                 holder.mActiveUnits.setText("deg");
                 break;
             case GIMBAL_PITCH:
                 holder.mActiveIds.setText("控制相机俯仰角");
+                holder.mActiveValue.setHint("俯仰角度在[-90,30]之间");
                 holder.mActiveValue.setEnabled(true);
                 holder.mActiveValue.setText(actionParam + "");
                 holder.mActiveUnits.setText("deg");
@@ -227,11 +232,13 @@ public class MissionPointSetAdapter extends RecyclerView.Adapter<MissionPointSet
                                 waypointAction.actionParam = 0;
                                 holder.mActiveValue.setEnabled(true);
                                 holder.mActiveValue.setText("0");
+                                holder.mActiveValue.setHint("偏航角度在[-180,180]之间");
                                 holder.mActiveUnits.setText("deg");
                                 break;
                             case 5:  //控制相机俯仰角
                                 waypointAction.actionType = WaypointActionType.GIMBAL_PITCH;
                                 holder.mActiveValue.setEnabled(true);
+                                holder.mActiveValue.setHint("俯仰角度在[-90,30]之间");
                                 holder.mActiveValue.setText("0");
                                 holder.mActiveUnits.setText("deg");
                                 break;
@@ -246,7 +253,40 @@ public class MissionPointSetAdapter extends RecyclerView.Adapter<MissionPointSet
             }
         });
 
-        //具体的值
+        holder.mActiveValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    if (!TextUtils.isEmpty(holder.mActiveValue.getText())) {
+                        String ed = holder.mActiveValue.getText().toString();
+                        if (waypointAction.actionType.equals(WaypointActionType.STAY)) {
+                            waypointAction.actionParam = Integer.parseInt(ed) * 1000;
+                        } else {
+                            waypointAction.actionParam = Integer.parseInt(ed);
+                        }
+
+                        // mWaypoint.adjustActionAtIndex(position, waypointAction);
+                    } else {
+                        waypointAction.actionParam = 0;
+                    }
+                } catch (NumberFormatException e) {
+                    waypointAction.actionParam = 0;
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        /*//具体的值
         holder.mActiveValue.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -268,7 +308,7 @@ public class MissionPointSetAdapter extends RecyclerView.Adapter<MissionPointSet
                     }
                 }
             }
-        });
+        });*/
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

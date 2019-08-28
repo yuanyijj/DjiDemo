@@ -79,20 +79,18 @@ public class MissionPointSet {
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_input_waypoint, null);
 
         final TextView tv_message = view.findViewById(R.id.tv_message);
-        tv_message.setText("纬度：" + marker.getPosition().latitude + ";经度：" + marker.getPosition().longitude);
+        tv_message.setText("纬度：" + mWaypoint.coordinate.getLatitude() + ";经度：" + mWaypoint.coordinate.getLongitude());
 
         final EditText et_height = view.findViewById(R.id.et_height);
         et_height.setText(mWaypoint.altitude + "");
-
+        et_height.setSelection(et_height.getText().length());
         et_height.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -100,8 +98,8 @@ public class MissionPointSet {
                 //编辑框内容变化之后会调用该方法，s为编辑框内容变化后的内容
                 if (et_height.getText().length() > 0) {
                     mWaypoint.altitude = Float.parseFloat(et_height.getText().toString());
-                }else{
-                    mWaypoint.altitude=0;
+                } else {
+                    mWaypoint.altitude = 0;
                 }
             }
         });
@@ -128,7 +126,7 @@ public class MissionPointSet {
 
 
         ImageView mAddViewBtn = (ImageView) view.findViewById(R.id.add_view_btn);
-        // todo 曲线过弯时动作无效
+
         mAddViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

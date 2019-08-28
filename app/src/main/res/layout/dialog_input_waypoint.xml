@@ -17,6 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
 
             <TextView
@@ -32,15 +34,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="请输入经度"
-
-                android:inputType="number|numberDecimal"/>
+                android:inputType="number|numberDecimal"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/et_latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="请输入纬度"
-                android:inputType="number|numberDecimal"/>
+                android:inputType="number|numberDecimal"
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/et_height"
@@ -59,7 +62,9 @@
                 android:id="@+id/relativeLayout_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:descendantFocusability="beforeDescendants">
+                android:descendantFocusability="beforeDescendants"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/active_recyclerview"

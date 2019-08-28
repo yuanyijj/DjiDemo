@@ -6,205 +6,211 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#242d34">
-<!-- Widget to see first person view (FPV) -->
-<dji.ux.widget.FPVWidget
-    android:id="@+id/fpv_widget"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerInParent="true"
-    custom:sourceCameraNameVisibility="false"/>
+    <!-- Widget to see first person view (FPV) -->
+    <dji.ux.widget.FPVWidget
+        android:id="@+id/fpv_widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        custom:sourceCameraNameVisibility="false"/>
 
-<dji.ux.widget.FPVOverlayWidget
-    android:id="@+id/fpv_overlay_widget"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
-
-
-<FrameLayout
-    android:id="@+id/fl2_container_little"
-    android:layout_width="180dp"
-    android:layout_height="130dp"
-    android:layout_alignParentBottom="true"
-    android:layout_gravity="bottom"
-    android:layout_margin="10dp"
-    android:background="@color/white"
-    android:clickable="true"/>
+    <dji.ux.widget.FPVOverlayWidget
+        android:id="@+id/fpv_overlay_widget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
-<!-- Widgets in top status bar -->
-<LinearLayout
-    android:id="@+id/signal"
-    android:layout_width="match_parent"
-    android:layout_height="25dp"
-    android:background="@color/dark_gray"
-    android:orientation="horizontal">
-
-    <dji.ux.widget.PreFlightStatusWidget
-
+    <FrameLayout
+        android:id="@+id/fl2_container_little"
         android:layout_width="180dp"
-        android:layout_height="25dp"/>
+        android:layout_height="130dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"
+        android:background="@color/white"
+        android:clickable="true"/>
 
-    <dji.ux.widget.FlightModeWidget
-        android:layout_width="103dp"
-        android:layout_height="22dp"/>
 
-    <dji.ux.widget.GPSSignalWidget
-        android:layout_width="44dp"
-        android:layout_height="22dp"/>
+    <!-- Widgets in top status bar -->
+    <LinearLayout
+        android:id="@+id/signal"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/dark_gray"
+        android:orientation="horizontal">
 
-    <dji.ux.widget.VisionWidget
-        android:layout_width="22dp"
-        android:layout_height="22dp"/>
+        <dji.ux.widget.PreFlightStatusWidget
 
-    <dji.ux.widget.RemoteControlSignalWidget
-        android:layout_width="38dp"
-        android:layout_height="22dp"/>
+            android:layout_width="180dp"
+            android:layout_height="25dp"/>
 
-    <dji.ux.widget.VideoSignalWidget
-        android:layout_width="38dp"
-        android:layout_height="22dp"/>
+        <dji.ux.widget.FlightModeWidget
+            android:layout_width="103dp"
+            android:layout_height="22dp"/>
 
-    <dji.ux.widget.WiFiSignalWidget
-        android:layout_width="32dp"
-        android:layout_height="25dp"/>
+        <dji.ux.widget.GPSSignalWidget
+            android:layout_width="44dp"
+            android:layout_height="22dp"/>
 
-    <dji.ux.widget.BatteryWidget
-        android:layout_width="96dp"
-        android:layout_height="22dp"
-        />
+        <dji.ux.widget.VisionWidget
+            android:layout_width="22dp"
+            android:layout_height="22dp"/>
 
-    <dji.ux.widget.ConnectionWidget
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_marginTop="3dp"/>
-</LinearLayout>
+        <dji.ux.widget.RemoteControlSignalWidget
+            android:layout_width="38dp"
+            android:layout_height="22dp"/>
 
-<LinearLayout
-    android:id="@+id/ll_manage"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/signal"
-    android:orientation="vertical">
+        <dji.ux.widget.VideoSignalWidget
+            android:layout_width="38dp"
+            android:layout_height="22dp"/>
 
-    <Button
-        android:id="@+id/add_waypoint"
+        <dji.ux.widget.WiFiSignalWidget
+            android:layout_width="32dp"
+            android:layout_height="25dp"/>
+
+        <dji.ux.widget.BatteryWidget
+            android:layout_width="96dp"
+            android:layout_height="22dp"
+            />
+
+        <dji.ux.widget.ConnectionWidget
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="3dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_manage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="手动添加定位点"/>
+        android:layout_below="@+id/signal"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_logcation"
+        <Button
+            android:id="@+id/add_waypoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手动添加定位点"/>
+
+        <Button
+            android:id="@+id/btn_logcation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"/>
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清除"/>
+
+        <Button
+            android:id="@+id/add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加飞行任务"/>
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始任务"/>
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂停任务"/>
+
+        <Button
+            android:id="@+id/route"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新建航线"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Location"/>
+        android:layout_below="@+id/signal"
+        android:layout_toRightOf="@+id/ll_manage"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/clear"
+        <Button
+            android:id="@+id/btn_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="定位点1"/>
+
+        <Button
+            android:id="@+id/btn_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="定位点2"/>
+
+        <Button
+            android:id="@+id/btn_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="定位点3"/>
+
+        <Button
+            android:id="@+id/btn_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="定位点4"/>
+
+    </LinearLayout>
+
+
+    <dji.ux.widget.controls.CameraControlsWidget
+        android:id="@+id/CameraCapturePanel"
+        android:layout_width="50dp"
+        android:layout_height="213dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        tools:ignore="RtlHardcoded"/>
+
+    <dji.ux.panel.CameraSettingExposurePanel
+        android:layout_width="180dp"
+        android:layout_height="263dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/CameraCapturePanel"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:visibility="invisible"
+        tools:ignore="RtlHardcoded"/>
+
+    <dji.ux.panel.CameraSettingAdvancedPanel
+        android:layout_width="180dp"
+        android:layout_height="263dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/CameraCapturePanel"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:visibility="invisible"
+        tools:ignore="RtlHardcoded"/>
+
+    <TextView
+        android:id="@+id/tv_test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="清除"/>
+        android:layout_above="@+id/tv_gimbal"
+        android:layout_centerHorizontal="true"
+        android:text="飞机状态"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
 
-    <Button
-        android:id="@+id/add"
+    <TextView
+        android:id="@+id/tv_gimbal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="添加飞行任务"/>
-
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="开始任务"/>
-
-    <Button
-        android:id="@+id/stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="暂停任务"/>
-
-</LinearLayout>
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/signal"
-    android:layout_toRightOf="@+id/ll_manage"
-    android:orientation="horizontal">
-
-    <Button
-        android:id="@+id/btn_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="定位点1"/>
-
-    <Button
-        android:id="@+id/btn_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="定位点2"/>
-
-    <Button
-        android:id="@+id/btn_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="定位点3"/>
-
-    <Button
-        android:id="@+id/btn_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="定位点4"/>
-
-</LinearLayout>
-
-
-<dji.ux.widget.controls.CameraControlsWidget
-    android:id="@+id/CameraCapturePanel"
-    android:layout_width="50dp"
-    android:layout_height="213dp"
-    android:layout_alignParentRight="true"
-    android:layout_centerVertical="true"
-    android:layout_marginTop="5dp"
-    tools:ignore="RtlHardcoded"/>
-
-<dji.ux.panel.CameraSettingExposurePanel
-    android:layout_width="180dp"
-    android:layout_height="263dp"
-    android:layout_centerVertical="true"
-    android:layout_toLeftOf="@+id/CameraCapturePanel"
-    android:background="@color/transparent"
-    android:gravity="center"
-    android:visibility="invisible"
-    tools:ignore="RtlHardcoded"/>
-
-<dji.ux.panel.CameraSettingAdvancedPanel
-    android:layout_width="180dp"
-    android:layout_height="263dp"
-    android:layout_centerVertical="true"
-    android:layout_toLeftOf="@+id/CameraCapturePanel"
-    android:background="@color/transparent"
-    android:gravity="center"
-    android:visibility="invisible"
-    tools:ignore="RtlHardcoded"/>
-
-<TextView
-    android:id="@+id/tv_test"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_above="@+id/tv_gimbal"
-    android:text="飞机状态"
-    android:textColor="@color/white"
-    android:layout_centerHorizontal="true"
-    android:textSize="20sp"/>
-
-<TextView
-    android:id="@+id/tv_gimbal"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignLeft="@+id/tv_test"
-    android:textColor="@color/white"
-    android:textSize="20sp"/>
+        android:layout_alignLeft="@+id/tv_test"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"/>
 
 </RelativeLayout>

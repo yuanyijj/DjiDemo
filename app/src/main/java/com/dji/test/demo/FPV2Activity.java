@@ -1,6 +1,7 @@
 package com.dji.test.demo;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -12,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.CheckBox;
@@ -166,6 +170,89 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
 
         markerList = new ArrayList<>();
 
+
+        btnInitView();
+        addListener();
+        gson = new Gson();
+        missionPointSet = new MissionPointSet(mContext);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Hide both the navigation bar and the status bar.
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        mMapView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        mMapView.onDestroy();
+        removeListener();
+        super.onDestroy();
+    }
+
+    public void btnInitView() {
+        findViewById(R.id.btn_1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialogText("0");
+            }
+        });
+        findViewById(R.id.btn_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialogText("2");
+               /* String value2 = SPUtil.getInstance().getString("3", "");
+                if (TextUtils.isEmpty(value2)) {
+                    map.put("latitude", drone_lat + "");
+                    map.put("longitude", drone_log + "");
+                    map.put("height", droneHeight + "");
+                    Gson gson = new Gson();
+                    SPUtil.getInstance().putString("2", gson.toJson(map));
+                }*/
+            }
+        });
+        findViewById(R.id.btn_3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialogText("3");
+                /*String value3 = SPUtil.getInstance().getString("3", "");
+                if (TextUtils.isEmpty(value3)) {
+                    map.put("latitude", drone_lat + "");
+                    map.put("longitude", drone_log + "");
+                    map.put("height", droneHeight + "");
+                    Gson gson = new Gson();
+                    SPUtil.getInstance().putString("3", gson.toJson(map));
+                }*/
+            }
+        });
+        findViewById(R.id.btn_4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialogText("4");
+               /* String value4 = SPUtil.getInstance().getString("4", "");
+                if (TextUtils.isEmpty(value4)) {
+                    map.put("latitude", drone_lat + "");
+                    map.put("longitude", drone_log + "");
+                    map.put("height", droneHeight + "");
+                    Gson gson = new Gson();
+                    SPUtil.getInstance().putString("4", gson.toJson(map));
+                }*/
+            }
+        });
         findViewById(R.id.btn_logcation).setOnClickListener(new View.OnClickListener() {//
             @Override
             public void onClick(View v) {
@@ -187,14 +274,12 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
                     }
                     markerList.clear();
                 }
-
                 if (!markerList.isEmpty()) {
                     for (Marker marker : markerList) {
                         marker.remove();
                     }
                     markerList.clear();
                 }
-
                 waypointList.clear();
                 istask = false;
                 isUpdateBackPoint = false;
@@ -204,7 +289,6 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
         findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (waypointMissionBuilder == null) {
                     Toast.makeText(mContext, "请设置航点", Toast.LENGTH_SHORT).show();
                     return;
@@ -342,98 +426,35 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
                 builder.show();//显示Dialog对话框
             }
         });
-        btnInitView();
-        addListener();
-        gson = new Gson();
-        missionPointSet = new MissionPointSet(mContext);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // Hide both the navigation bar and the status bar.
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        mMapView.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        mMapView.onPause();
-        super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        mMapView.onDestroy();
-        removeListener();
-        super.onDestroy();
-    }
-
-    public void btnInitView() {
-
-        String value1 = SPUtil.getInstance().getString("0", "");
-        String value2 = SPUtil.getInstance().getString("2", "");
-        String value3 = SPUtil.getInstance().getString("3", "");
-        String value4 = SPUtil.getInstance().getString("4", "");
-
-
-        findViewById(R.id.btn_1).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.route).setOnClickListener(new View.OnClickListener() {//新建航线
             @Override
             public void onClick(View v) {
-                getDialogText("0");
-            }
-        });
+                final Dialog sInputDialog = new Dialog(mContext, R.style.BottomDialog);
+                LayoutInflater inflater =LayoutInflater.from(mContext);
+                View view = inflater.inflate(R.layout.input_waypoint_dialog, null);
+                final EditText setInfo = (EditText) view.findViewById(R.id.set_info);
+                final TextView settitle = (TextView) view.findViewById(R.id.set_dialog_title);
+                final TextView cancel = (TextView) view.findViewById(R.id.cancel);
+                final TextView ok = (TextView) view.findViewById(R.id.ok);
+                settitle.setText("新建航线");
+                sInputDialog.setCancelable(true);
+                sInputDialog.setCanceledOnTouchOutside(true);
+                sInputDialog.setTitle("");
+                Window dialogWindow = sInputDialog.getWindow();
+                dialogWindow.setGravity(Gravity.CENTER);
+                WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();
+                windowParams.dimAmount = 0.0f;
+                dialogWindow.setAttributes(windowParams);
+                DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+                int mWindowWidth = (int) (displayMetrics.widthPixels * 0.5);
+                sInputDialog.setContentView(view, new ViewGroup.LayoutParams(mWindowWidth,
+                        ViewGroup.MarginLayoutParams.WRAP_CONTENT));
+                sInputDialog.show();
 
-        findViewById(R.id.btn_2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialogText("2");
-               /* String value2 = SPUtil.getInstance().getString("3", "");
-                if (TextUtils.isEmpty(value2)) {
-                    map.put("latitude", drone_lat + "");
-                    map.put("longitude", drone_log + "");
-                    map.put("height", droneHeight + "");
-                    Gson gson = new Gson();
-                    SPUtil.getInstance().putString("2", gson.toJson(map));
-                }*/
-            }
-        });
-        findViewById(R.id.btn_3).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialogText("3");
-                /*String value3 = SPUtil.getInstance().getString("3", "");
-                if (TextUtils.isEmpty(value3)) {
-                    map.put("latitude", drone_lat + "");
-                    map.put("longitude", drone_log + "");
-                    map.put("height", droneHeight + "");
-                    Gson gson = new Gson();
-                    SPUtil.getInstance().putString("3", gson.toJson(map));
-                }*/
-            }
-        });
 
-        findViewById(R.id.btn_4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getDialogText("4");
-               /* String value4 = SPUtil.getInstance().getString("4", "");
-                if (TextUtils.isEmpty(value4)) {
-                    map.put("latitude", drone_lat + "");
-                    map.put("longitude", drone_log + "");
-                    map.put("height", droneHeight + "");
-                    Gson gson = new Gson();
-                    SPUtil.getInstance().putString("4", gson.toJson(map));
-                }*/
             }
         });
-
     }
 
     Map<String, Object> hashList;
@@ -647,14 +668,13 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        String title = marker.getTitle();
-        switch (title) {
+        marker.hideInfoWindow();
+        switch (marker.getTitle()) {
             case "WAY_POINT":
                 missionPointSet.showWayPointActionDialog(waypointMissionBuilder.getWaypointList(), markerList, marker);
-                marker.hideInfoWindow();
                 break;
         }
-        return false;
+        return true;
     }
 
     MissonWayPointDialogFragment mMissonWayPointDialogFragment;
@@ -779,10 +799,13 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
                 .setPitchRangeExtensionEnabled(true, new CommonCallbacks.CompletionCallback() {
                     @Override
                     public void onResult(DJIError djiError) {
-
+                        if (null != djiError) {
+                            LogUtil.v(TAG, djiError.getDescription());
+                        } else {
+                            LogUtil.v(TAG, "setPitchRangeExtensionEnabled:true设置成功");
+                        }
                     }
                 });
-
     }
 
     public double drone_lat;// 飞机纬度
@@ -791,8 +814,6 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
     public double mHomeLatitude;// 飞机返航点纬度
     public double mHomeLongitude;// 飞机返航点经度
     public double takeoffLocationAltitude;// 飞机返航点经度
-
-
     public double DestinationLatitude;//终点纬度
     public double DestinationLongitude;// 终点经度
     public float DestinationHeight;// 终点高度
@@ -1000,34 +1021,6 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
                 .setCancelable(false)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
-                        /*//是否设置云台角度
-                        if (cb_gimbal.isChecked()) {
-                            LogUtil.v(TAG, "设置云台角度：" + Integer.parseInt(et_gimbal.getText().toString()));
-                            waypointMissionBuilder.getWaypointList().get(waypointMissionBuilder.getWaypointList().size() - 1).addAction(
-                                    new WaypointAction(WaypointActionType.GIMBAL_PITCH, Integer.parseInt(et_gimbal.getText().toString())));
-                        }
-
-                        //是否顺时针旋转
-                        if (cb_rotate.isChecked() && cb_rotate_mode.isChecked()) {
-                            waypointMissionBuilder.getWaypointList().get(waypointMissionBuilder.getWaypointList().size() - 1).turnMode = WaypointTurnMode.CLOCKWISE;
-                        } else {
-                            waypointMissionBuilder.getWaypointList().get(waypointMissionBuilder.getWaypointList().size() - 1).turnMode = WaypointTurnMode.COUNTER_CLOCKWISE;
-                        }
-                        //是否旋转无人机
-                        if (cb_rotate.isChecked()) {
-                            LogUtil.v(TAG, "设置旋转无人机角度：" + Integer.parseInt(et_rotate.getText().toString()));
-                            waypointMissionBuilder.getWaypointList().get(waypointMissionBuilder.getWaypointList().size() - 1).addAction(
-                                    new WaypointAction(WaypointActionType.ROTATE_AIRCRAFT, Integer.parseInt(et_rotate.getText().toString())));
-                        }
-
-
-                        //是否拍照
-                        if (cb_shoot.isChecked()) {
-                            waypointMissionBuilder.getWaypointList().get(waypointMissionBuilder.getWaypointList().size() - 1).addAction(
-                                    new WaypointAction(WaypointActionType.START_TAKE_PHOTO, 0));
-                        }*/
-
                         configWayPointMission();
                     }
 
@@ -1036,26 +1029,11 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
-
                 })
                 .create()
                 .show();
     }
 
-    String nulltoIntegerDefault(String value) {
-        if (!isIntValue(value)) value = "0";
-        return value;
-    }
-
-    boolean isIntValue(String val) {
-        try {
-            val = val.replace(" ", "");
-            Integer.parseInt(val);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
 
     private void configWayPointMission() {
         if (waypointMissionBuilder == null) {
@@ -1072,12 +1050,9 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
                     .flightPathMode(WaypointMissionFlightPathMode.NORMAL);
         }
 
-       /* if (waypointMissionBuilder.getWaypointList().size() > 0) {
-            if (waypointMissionBuilder.getWaypointList().get(0).altitude == 0) {
-                waypointMissionBuilder.getWaypointList().get(0).altitude = 2;
-            }
-            for (int i = 1; i < waypointMissionBuilder.getWaypointList().size(); i++) {
-                waypointMissionBuilder.getWaypointList().get(i).altitude = altitude;
+        LogUtil.v(TAG, "航点个数：" + waypointMissionBuilder.getWaypointList().size());
+        if (waypointMissionBuilder.getWaypointList().size() > 0) {
+            for (int i = 0; i < waypointMissionBuilder.getWaypointList().size(); i++) {
                 waypointMissionBuilder.getWaypointList().get(i).heading = 90;
                 LogUtil.v(TAG, waypointMissionBuilder.getWaypointList().get(i).coordinate.getLatitude() + ";" + waypointMissionBuilder.getWaypointList().get(i).coordinate.getLongitude() + ";");
             }
@@ -1085,9 +1060,10 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
             DestinationLongitude = waypointMissionBuilder.getWaypointList().get(waypointMissionBuilder.getWaypointList().size() - 1).coordinate.getLongitude();// 终点经度
             DestinationHeight = waypointMissionBuilder.getWaypointList().get(waypointMissionBuilder.getWaypointList().size() - 1).altitude;// 终点高度
             setResultToToast("设置航点状态成功");
-        }*/
+        }
 
-        for (int i = 1; i < waypointMissionBuilder.getWaypointList().size(); i++) {
+        for (int i = 0; i < waypointMissionBuilder.getWaypointList().size(); i++) {
+            LogUtil.v(TAG, "-----------------------");
             LogUtil.v(TAG, "Latitude:" + waypointMissionBuilder.getWaypointList().get(i).coordinate.getLatitude() + ";Longitude()"
                     + waypointMissionBuilder.getWaypointList().get(i).coordinate.getLongitude() + ";高度："
                     + waypointMissionBuilder.getWaypointList().get(i).altitude + ";"
