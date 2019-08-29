@@ -79,63 +79,82 @@
             android:layout_marginTop="3dp"/>
     </LinearLayout>
 
-    <LinearLayout
+    <ScrollView
         android:id="@+id/ll_manage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_below="@+id/signal"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/add_waypoint"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="手动添加定位点"/>
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_logcation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location"/>
+            <Button
+                android:id="@+id/add_waypoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手动添加定位点"/>
 
-        <Button
-            android:id="@+id/clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="清除"/>
+            <Button
+                android:id="@+id/btn_logcation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Location"/>
 
-        <Button
-            android:id="@+id/add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="添加飞行任务"/>
+            <Button
+                android:id="@+id/clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="清除"/>
 
-        <Button
-            android:id="@+id/start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="开始任务"/>
+            <Button
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加飞行任务"/>
 
-        <Button
-            android:id="@+id/stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="暂停任务"/>
+            <Button
+                android:id="@+id/start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="开始任务"/>
 
-        <Button
-            android:id="@+id/route"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="新建航线"/>
+            <Button
+                android:id="@+id/stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂停任务"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/route"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="新建航线"/>
+
+            <Button
+                android:id="@+id/routelist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查询航线"/>
+
+            <Button
+                android:id="@+id/add_route"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保存航点"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/signal"
         android:layout_toRightOf="@+id/ll_manage"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btn_1"
@@ -162,7 +181,6 @@
             android:text="定位点4"/>
 
     </LinearLayout>
-
 
     <dji.ux.widget.controls.CameraControlsWidget
         android:id="@+id/CameraCapturePanel"

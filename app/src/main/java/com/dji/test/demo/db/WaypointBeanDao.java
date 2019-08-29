@@ -26,9 +26,9 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Uid = new Property(1, String.class, "Uid", false, "UID");
-        public final static Property Latitude = new Property(2, String.class, "Latitude", false, "LATITUDE");
-        public final static Property Longitude = new Property(3, String.class, "Longitude", false, "LONGITUDE");
-        public final static Property DestinationHeight = new Property(4, String.class, "DestinationHeight", false, "DESTINATION_HEIGHT");
+        public final static Property Latitude = new Property(2, double.class, "Latitude", false, "LATITUDE");
+        public final static Property Longitude = new Property(3, double.class, "Longitude", false, "LONGITUDE");
+        public final static Property DestinationHeight = new Property(4, float.class, "DestinationHeight", false, "DESTINATION_HEIGHT");
         public final static Property LocationAltitude = new Property(5, String.class, "LocationAltitude", false, "LOCATION_ALTITUDE");
         public final static Property HeadingModeString = new Property(6, String.class, "HeadingModeString", false, "HEADING_MODE_STRING");
     }
@@ -48,9 +48,9 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"WAYPOINT_BEAN\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"UID\" TEXT NOT NULL ," + // 1: Uid
-                "\"LATITUDE\" TEXT NOT NULL ," + // 2: Latitude
-                "\"LONGITUDE\" TEXT NOT NULL ," + // 3: Longitude
-                "\"DESTINATION_HEIGHT\" TEXT NOT NULL ," + // 4: DestinationHeight
+                "\"LATITUDE\" REAL NOT NULL ," + // 2: Latitude
+                "\"LONGITUDE\" REAL NOT NULL ," + // 3: Longitude
+                "\"DESTINATION_HEIGHT\" REAL NOT NULL ," + // 4: DestinationHeight
                 "\"LOCATION_ALTITUDE\" TEXT," + // 5: LocationAltitude
                 "\"HEADING_MODE_STRING\" TEXT);"); // 6: HeadingModeString
     }
@@ -70,9 +70,9 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindString(2, entity.getUid());
-        stmt.bindString(3, entity.getLatitude());
-        stmt.bindString(4, entity.getLongitude());
-        stmt.bindString(5, entity.getDestinationHeight());
+        stmt.bindDouble(3, entity.getLatitude());
+        stmt.bindDouble(4, entity.getLongitude());
+        stmt.bindDouble(5, entity.getDestinationHeight());
  
         String LocationAltitude = entity.getLocationAltitude();
         if (LocationAltitude != null) {
@@ -94,9 +94,9 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindString(2, entity.getUid());
-        stmt.bindString(3, entity.getLatitude());
-        stmt.bindString(4, entity.getLongitude());
-        stmt.bindString(5, entity.getDestinationHeight());
+        stmt.bindDouble(3, entity.getLatitude());
+        stmt.bindDouble(4, entity.getLongitude());
+        stmt.bindDouble(5, entity.getDestinationHeight());
  
         String LocationAltitude = entity.getLocationAltitude();
         if (LocationAltitude != null) {
@@ -119,9 +119,9 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
         WaypointBean entity = new WaypointBean( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // Uid
-            cursor.getString(offset + 2), // Latitude
-            cursor.getString(offset + 3), // Longitude
-            cursor.getString(offset + 4), // DestinationHeight
+            cursor.getDouble(offset + 2), // Latitude
+            cursor.getDouble(offset + 3), // Longitude
+            cursor.getFloat(offset + 4), // DestinationHeight
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // LocationAltitude
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // HeadingModeString
         );
@@ -132,9 +132,9 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
     public void readEntity(Cursor cursor, WaypointBean entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUid(cursor.getString(offset + 1));
-        entity.setLatitude(cursor.getString(offset + 2));
-        entity.setLongitude(cursor.getString(offset + 3));
-        entity.setDestinationHeight(cursor.getString(offset + 4));
+        entity.setLatitude(cursor.getDouble(offset + 2));
+        entity.setLongitude(cursor.getDouble(offset + 3));
+        entity.setDestinationHeight(cursor.getFloat(offset + 4));
         entity.setLocationAltitude(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setHeadingModeString(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
      }

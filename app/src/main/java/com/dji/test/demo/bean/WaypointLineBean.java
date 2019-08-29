@@ -13,16 +13,20 @@ public class WaypointLineBean {
     @NotNull
     private String lineName;//航线名称
 
-    @NotNull
+
+    private String num;//航点数量
+
+
     private String HomeLatitude;//起飞点纬度
-    @NotNull
+
     private String HomeLongitude;//起飞点经度
 
-    @Generated(hash = 395298666)
-    public WaypointLineBean(Long id, @NotNull String lineName,
-            @NotNull String HomeLatitude, @NotNull String HomeLongitude) {
+    @Generated(hash = 598153453)
+    public WaypointLineBean(Long id, @NotNull String lineName, String num,
+            String HomeLatitude, String HomeLongitude) {
         this.id = id;
         this.lineName = lineName;
+        this.num = num;
         this.HomeLatitude = HomeLatitude;
         this.HomeLongitude = HomeLongitude;
     }
@@ -61,5 +65,23 @@ public class WaypointLineBean {
 
     public void setHomeLongitude(String HomeLongitude) {
         this.HomeLongitude = HomeLongitude;
+    }
+
+    @Override
+    public String toString() {
+        return "WaypointLineBean{" +
+                "id=" + id +
+                ", lineName='" + lineName + '\'' +
+                ", HomeLatitude='" + HomeLatitude + '\'' +
+                ", HomeLongitude='" + HomeLongitude + '\'' +
+                '}';
+    }
+
+    public String getNum() {
+        return this.num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
     }
 }

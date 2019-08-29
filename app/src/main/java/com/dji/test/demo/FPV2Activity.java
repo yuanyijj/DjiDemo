@@ -10,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -41,16 +44,29 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.MyLocationStyle;
+import com.dji.test.demo.adapter.MissionPointSetAdapter;
+import com.dji.test.demo.adapter.WayPointAdapter;
 import com.dji.test.demo.base.MApplication;
+import com.dji.test.demo.bean.WaypointBean;
+import com.dji.test.demo.bean.WaypointLineBean;
+import com.dji.test.demo.bean.WaypointMode;
 import com.dji.test.demo.dialog.MissonWayPointDialogFragment;
 import com.dji.test.demo.util.DensityUtil;
+import com.dji.test.demo.util.GreendaoUtils;
+import com.dji.test.demo.util.GsonUtil;
 import com.dji.test.demo.util.LatLngUtils;
 import com.dji.test.demo.util.LogUtil;
 import com.dji.test.demo.util.MissionPointSet;
 import com.dji.test.demo.util.RouteUtlis;
 import com.dji.test.demo.util.SPUtil;
+import com.dji.test.demo.util.ToastUtils;
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -431,7 +447,7 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
             @Override
             public void onClick(View v) {
                 final Dialog sInputDialog = new Dialog(mContext, R.style.BottomDialog);
-                LayoutInflater inflater =LayoutInflater.from(mContext);
+                LayoutInflater inflater = LayoutInflater.from(mContext);
                 View view = inflater.inflate(R.layout.input_waypoint_dialog, null);
                 final EditText setInfo = (EditText) view.findViewById(R.id.set_info);
                 final TextView settitle = (TextView) view.findViewById(R.id.set_dialog_title);
@@ -451,12 +467,150 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
                 sInputDialog.setContentView(view, new ViewGroup.LayoutParams(mWindowWidth,
                         ViewGroup.MarginLayoutParams.WRAP_CONTENT));
                 sInputDialog.show();
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sInputDialog.dismiss();
+                    }
+                });
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (setInfo.getText().length() > 0) {
+                            WaypointLineBean waypointLine = new WaypointLineBean();
+                            waypointLine.setLineName(
+                                    setInfo.getText().toString());
+                            GreendaoUtils.getInstance().saveWaypointLine(waypointLine);
+                            sInputDialog.dismiss();
+                        } else {
+                            ToastUtils.showToast("请输入航线名称");
+                        }
+                    }
+                });
+            }
+        });
+
+        /**添加航点*/
+        findViewById(R.id.add_route).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != waypointMissionBuilder && waypointMissionBuilder.getWaypointList().size() > 0) {
+                    List<Waypoint> waypointList = waypointMissionBuilder.getWaypointList();
+                    if (waypointList.size() > 0) {
+                        GreendaoUtils.getInstance().delectWaypoint(
+                                GreendaoUtils.getInstance().getWaypointlisr(WaypointLineNum + ""));
+                    }
+
+                    for (Waypoint way : waypointList) {
+                        WaypointBean waypointBean = new WaypointBean();
+                        List<WaypointBean.MissionHeadingMode> tlist = new ArrayList<>();
+                        waypointBean.setLongitude(way.coordinate.getLongitude());
+                        waypointBean.setUid(WaypointLineNum + "");
+                        waypointBean.setLatitude(way.coordinate.getLatitude());
+                        waypointBean.setDestinationHeight(way.altitude);
+                        for (WaypointAction ways : way.waypointActions) {
+                            WaypointBean.MissionHeadingMode mode = new WaypointBean.MissionHeadingMode();
+                            mode.setMode(ways.actionType);
+                            mode.setVar(ways.actionParam);
+                            tlist.add(mode);
+                        }
+                        waypointBean.setHeadingModeString(GsonUtil.toJson(tlist));
+                        GreendaoUtils.getInstance().saveWaypoint(waypointBean);
+                    }
+                    List<WaypointLineBean> waylinlist = GreendaoUtils.getInstance().queryWaypointLine(WaypointLineNum + "");
+                    if (waylinlist.size() > 0) {
+                        WaypointLineBean waylin = waylinlist.get(0);
+                        waylin.setNum(waypointMissionBuilder.getWaypointCount() + "");
+                        GreendaoUtils.getInstance().updataWaypointLine(waylin);
+                    }
+                    setResultToToast("添加成功");
+
+                }
+            }
+        });
+
+        /**
+         * 航点列表*/
+        LatLng WaypointlatLng;
+        findViewById(R.id.routelist).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<WaypointLineBean> tlist =
+                        GreendaoUtils.getInstance().getWaypointLinelisr();
+                LogUtil.v(TAG, tlist.toString());
+
+                final Dialog sInputDialog = new Dialog(mContext, R.style.BottomDialog);
+                LayoutInflater inflater = LayoutInflater.from(mContext);
+                View view = inflater.inflate(R.layout.dialog_waypoint, null);
 
 
+                sInputDialog.setCancelable(true);
+                sInputDialog.setCanceledOnTouchOutside(true);
+                sInputDialog.setTitle("");
+                Window dialogWindow = sInputDialog.getWindow();
+                dialogWindow.setGravity(Gravity.CENTER);
+                WindowManager.LayoutParams windowParams = dialogWindow.getAttributes();
+                windowParams.dimAmount = 0.0f;
+                dialogWindow.setAttributes(windowParams);
+                DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+                int mWindowWidth = (int) (displayMetrics.widthPixels * 0.5);
+                sInputDialog.setContentView(view, new ViewGroup.LayoutParams(mWindowWidth,
+                        ViewGroup.MarginLayoutParams.WRAP_CONTENT));
+                sInputDialog.show();
+                final RecyclerView active_recyclerview = (RecyclerView) view.findViewById(R.id.active_recyclerview);
+                //动作列表
+                final WayPointAdapter missionPointSetAdapter =
+                        new WayPointAdapter(mContext, tlist);
+                active_recyclerview.setLayoutManager(new LinearLayoutManager(mContext));
+                active_recyclerview.setAdapter(missionPointSetAdapter);
+                active_recyclerview.setHasFixedSize(true);
+                active_recyclerview.setItemAnimator(new DefaultItemAnimator());
+                active_recyclerview.setNestedScrollingEnabled(false);
+                missionPointSetAdapter.setOnItemClickListener(new WayPointAdapter.ItemClickListener() {
+                    @Override
+                    public void onItemClick(int position, List<WaypointLineBean> waypointActions) {
+                        sInputDialog.dismiss();
+                        WaypointLineNum = waypointActions.get(position).getId();
+                        List<WaypointBean> zlist =
+                                GreendaoUtils.getInstance().getWaypointlisr(WaypointLineNum + "");
+                        LogUtil.v(TAG, zlist.toString());
+                        if (zlist.size() > 0) {
+                            if (!markerList.isEmpty()) {
+                                for (Marker marker : markerList) {
+                                    marker.remove();
+                                }
+                                markerList.clear();
+                            }
+                            if (!markerList.isEmpty()) {
+                                for (Marker marker : markerList) {
+                                    marker.remove();
+                                }
+                                markerList.clear();
+                            }
+                            waypointList.clear();
+                            istask = false;
+                            isUpdateBackPoint = false;
+                            for (WaypointBean way : zlist) {
+                                converter.from(CoordinateConverter.CoordType.GPS);
+                                // sourceLatLng待转换坐标点 DPoint类型
+                                converter.coord(new LatLng(way.getLatitude(), way.getLongitude()));
+                                // 执行转换操作
+
+
+                                markerList.add(getMarker(converter.convert(), way));
+                                //markerList.add(getMarker(new LatLng(way.getLatitude(), way.getLongitude())));
+                            }
+                        } else {
+                            setResultToToast("航线无航点");
+                        }
+                    }
+                });
             }
         });
     }
 
+    long WaypointLineNum = 0;
     Map<String, Object> hashList;
 
     public void getDialogText(final String test) {
@@ -1072,6 +1226,7 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
             for (WaypointAction Action : waypointMissionBuilder.getWaypointList().get(i).waypointActions) {
                 LogUtil.v(TAG, "actionParam:" + Action.actionParam + ";actionType:"
                         + Action.actionType + ";");
+
             }
         }
 
@@ -1087,7 +1242,6 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
         } else {
             setResultToToast("加载路径失败 " + error.getDescription());
         }
-
     }
 
     public WaypointMissionOperator getWaypointMissionOperator() {
@@ -1151,7 +1305,6 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
     }
 
     //航点Marker
-
     private Marker getMarker(LatLng latLng) {
         View view = getInputLatlngView(String.valueOf(markerList.size() + 1));
         BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromView(view);
@@ -1168,7 +1321,37 @@ public class FPV2Activity extends AppCompatActivity implements AMap.OnMarkerClic
         }
         waypointList.add(new Waypoint(GpsLatLng.get("lat"), GpsLatLng.get("lon"), Math.round(droneHeight)));
         waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
+        return marker;
+    }
 
+    //航点Marker
+    private Marker getMarker(LatLng latLng, WaypointBean way) {
+        View view = getInputLatlngView(String.valueOf(markerList.size() + 1));
+        BitmapDescriptor markerIcon = BitmapDescriptorFactory.fromView(view);
+        final MarkerOptions markerOptions = new MarkerOptions().position(latLng).icon(markerIcon).zIndex(2);
+        Marker marker = aMap.addMarker(markerOptions);
+        marker.setAnchor(0.5f, 0.71100f);
+        marker.setDraggable(true);
+        marker.setSnippet(String.valueOf(markerList.size() + 1));
+        marker.setTitle("WAY_POINT");
+        HashMap<String, Double> GpsLatLng = LatLngUtils.delta(latLng.latitude, latLng.longitude);
+        if (waypointMissionBuilder == null) {
+            waypointMissionBuilder = new WaypointMission.Builder();
+        }
+        waypointList.add(new Waypoint(GpsLatLng.get("lat"), GpsLatLng.get("lon"), Math.round(way.getDestinationHeight())));
+        try {
+            JSONArray jsonArray = new JSONArray(way.getHeadingModeString());
+            for (int z = 0; z < jsonArray.length(); z++) {
+                WaypointMode mode = GsonUtil.fromJson(jsonArray.opt(z).toString(), WaypointMode.class);
+                waypointList.get(waypointList.size() - 1).addAction(new WaypointAction(mode.getMode(), mode.getVar()));
+            }
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
         return marker;
     }
 }

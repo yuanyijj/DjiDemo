@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_waypoint"
+    android:layout_width="match_parent"
+    android:layout_height="35dp"
+    android:layout_marginTop="15dp"
+    android:background="@color/gray_light"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="航线名称：qweqw"
+        android:textColor="@color/blue"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_num"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="当前航点数:11"
+        android:textColor="@color/black"/>
+
+
+</LinearLayout>
