@@ -109,6 +109,13 @@
                 android:text="清除"/>
 
             <Button
+                android:id="@+id/btn_repeal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="撤销"/>
+
+
+            <Button
                 android:id="@+id/add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -124,7 +131,7 @@
                 android:id="@+id/stop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="暂停任务"/>
+                android:text="停止任务"/>
 
             <Button
                 android:id="@+id/route"
@@ -143,6 +150,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="保存航点"/>
+
+
+
+            <Button
+                android:id="@+id/add_waypoints"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加航点"/>
 
         </LinearLayout>
 

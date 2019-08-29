@@ -43,7 +43,7 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
     private LayoutInflater mInflater;
     private ItemClickListener mItemClickListener;
     private ItemOnLongClickListener mItemOnLongClickListener;
-    private OnItemDeleteClickListener mOnItemDeleteClickListener = null;
+    private OnItemDeleteClickListener mOnItemDeleteClickListener;
     private OnItemTypeSelectClickListener mOnItemTypeSelectClickListener = null;
     private OnItemInputEditListener mOnItemInputEditClickListener = null;
     private PopupWindow mActionTypePW;
@@ -63,7 +63,7 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
     }
 
     public interface OnItemDeleteClickListener {
-        void onItemDeleteClick(ImageView view, int position);
+        void onItemDeleteClick( long position);
     }
 
     //动作类型添加
@@ -124,6 +124,12 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
                 mItemClickListener.onItemClick(position, waypointActions);
             }
         });
+        holder.tv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnItemDeleteClickListener.onItemDeleteClick(waypointActions.get(position).getId());
+            }
+        });
     }
 
     @Override
@@ -136,6 +142,7 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
     protected class ItemViewHolder extends RecyclerView.ViewHolder {
         TextView tv_num;
         TextView tv_name;
+        TextView tv_delete;
         LinearLayout ll_waypoint;
 
         public ItemViewHolder(View view) {
@@ -143,6 +150,7 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
             ll_waypoint = view.findViewById(R.id.ll_waypoint);
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             tv_num = (TextView) view.findViewById(R.id.tv_num);
+            tv_delete = (TextView) view.findViewById(R.id.tv_delete);
         }
     }
 }

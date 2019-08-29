@@ -105,4 +105,15 @@ public class GreendaoUtils {
         DaoSession.getWaypointBeanDao().deleteInTx(text);
     }
 
+    /**
+     * 删除航线
+     *
+     * @param text
+     */
+    public void delectWaypointLine(WaypointLineBean text) {
+        DaoSession.getWaypointLineBeanDao().deleteInTx(text);
+    }
+
+
+
 }

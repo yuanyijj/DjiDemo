@@ -6,85 +6,87 @@
               android:gravity="center"
               android:orientation="vertical">
 
-    <ScrollView
 
+    <LinearLayout
+        android:id="@+id/ll_input"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/ll_input"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="31321321"/>
+            android:text="31321321"
+            android:textSize="20sp"/>
 
 
-            <EditText
-                android:id="@+id/et_longitude"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入经度"
-                android:inputType="number|numberDecimal"
-                android:visibility="gone"/>
+        <EditText
+            android:id="@+id/et_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入经度"
+            android:inputType="number|numberDecimal"
+            android:visibility="gone"/>
 
-            <EditText
-                android:id="@+id/et_latitude"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入纬度"
-                android:inputType="number|numberDecimal"
-                android:visibility="gone"/>
+        <EditText
+            android:id="@+id/et_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入纬度"
+            android:inputType="number|numberDecimal"
+            android:visibility="gone"/>
 
-            <EditText
-                android:id="@+id/et_height"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="请输入高度"
-                android:inputType="number|numberDecimal"/>
+        <EditText
+            android:id="@+id/et_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入高度"
+            android:inputType="number|numberDecimal"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="动作："
-                android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="动作："
+            android:textSize="15sp"/>
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout_rv"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:descendantFocusability="beforeDescendants"
-                android:focusable="true"
-                android:focusableInTouchMode="true">
+                android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/active_recyclerview"
+                <RelativeLayout
+                    android:id="@+id/relativeLayout_rv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:scrollbars="none"></android.support.v7.widget.RecyclerView>
-            </RelativeLayout>
+                    android:layout_height="match_parent"
+                    android:descendantFocusability="beforeDescendants"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true">
 
-            <ImageView
-                android:id="@+id/add_view_btn"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:padding="5dp"
-                android:text=""
-                app:srcCompat="@drawable/ic_addition_fill"/>
-        </LinearLayout>
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/active_recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbars="none"></android.support.v7.widget.RecyclerView>
+                </RelativeLayout>
 
-    </ScrollView>
-
+                <ImageView
+                    android:id="@+id/add_view_btn"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:padding="5dp"
+                    android:text=""
+                    app:srcCompat="@drawable/ic_addition_fill"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </LinearLayout>

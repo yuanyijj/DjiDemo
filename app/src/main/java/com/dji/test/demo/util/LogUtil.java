@@ -22,7 +22,7 @@ import com.qx.wz.dj.rtcm.Constant;
 
 public class LogUtil {
     private static final long MAX_SIZE = 4 * 1024 * 1024; //文件上限大小
-    private static final String LOCAL_PATH = Environment.getExternalStorageDirectory() + "/DJIDemo/common/";
+    private static final String LOCAL_PATH = Environment.getExternalStorageDirectory() + "/Android/data/com.dji.test.demo/common/";
     private static final String ERROR = "error.txt";
     private static final String LOG = "log.txt";//普通日志
     private static final String MSG = "msg.txt";//报文信息

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="35dp"
     android:layout_marginTop="15dp"
-    android:background="@color/gray_light"
+    android:background="#efefef"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="horizontal">
@@ -32,5 +32,16 @@
         android:text="当前航点数:11"
         android:textColor="@color/black"/>
 
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/blue"
+        android:textSize="20sp"
+        />
 
 </LinearLayout>

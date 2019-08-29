@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="300dp"
               android:layout_height="wrap_content"
-
+              android:background="#efefef"
               android:focusable="true"
               android:focusableInTouchMode="true"
               android:orientation="vertical">
@@ -17,7 +17,7 @@
         android:textColorHint="@color/black"
         android:scaleType="center"
         android:text="标题"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16sp"/>
 
 
@@ -50,6 +50,7 @@
             android:layout_height="45dp"
             android:layout_weight="1"
             android:gravity="center"
+
             android:text="取消"
             android:textColor="@color/black"
             android:textSize="16sp"/>
