@@ -27,8 +27,9 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property LineName = new Property(1, String.class, "lineName", false, "LINE_NAME");
         public final static Property Num = new Property(2, String.class, "num", false, "NUM");
-        public final static Property HomeLatitude = new Property(3, String.class, "HomeLatitude", false, "HOME_LATITUDE");
-        public final static Property HomeLongitude = new Property(4, String.class, "HomeLongitude", false, "HOME_LONGITUDE");
+        public final static Property HomeLatitude = new Property(3, double.class, "HomeLatitude", false, "HOME_LATITUDE");
+        public final static Property HomeLongitude = new Property(4, double.class, "HomeLongitude", false, "HOME_LONGITUDE");
+        public final static Property LocationAltitude = new Property(5, float.class, "LocationAltitude", false, "LOCATION_ALTITUDE");
     }
 
 
@@ -47,8 +48,9 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"LINE_NAME\" TEXT NOT NULL ," + // 1: lineName
                 "\"NUM\" TEXT," + // 2: num
-                "\"HOME_LATITUDE\" TEXT," + // 3: HomeLatitude
-                "\"HOME_LONGITUDE\" TEXT);"); // 4: HomeLongitude
+                "\"HOME_LATITUDE\" REAL NOT NULL ," + // 3: HomeLatitude
+                "\"HOME_LONGITUDE\" REAL NOT NULL ," + // 4: HomeLongitude
+                "\"LOCATION_ALTITUDE\" REAL NOT NULL );"); // 5: LocationAltitude
     }
 
     /** Drops the underlying database table. */
@@ -71,16 +73,9 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
         if (num != null) {
             stmt.bindString(3, num);
         }
- 
-        String HomeLatitude = entity.getHomeLatitude();
-        if (HomeLatitude != null) {
-            stmt.bindString(4, HomeLatitude);
-        }
- 
-        String HomeLongitude = entity.getHomeLongitude();
-        if (HomeLongitude != null) {
-            stmt.bindString(5, HomeLongitude);
-        }
+        stmt.bindDouble(4, entity.getHomeLatitude());
+        stmt.bindDouble(5, entity.getHomeLongitude());
+        stmt.bindDouble(6, entity.getLocationAltitude());
     }
 
     @Override
@@ -97,16 +92,9 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
         if (num != null) {
             stmt.bindString(3, num);
         }
- 
-        String HomeLatitude = entity.getHomeLatitude();
-        if (HomeLatitude != null) {
-            stmt.bindString(4, HomeLatitude);
-        }
- 
-        String HomeLongitude = entity.getHomeLongitude();
-        if (HomeLongitude != null) {
-            stmt.bindString(5, HomeLongitude);
-        }
+        stmt.bindDouble(4, entity.getHomeLatitude());
+        stmt.bindDouble(5, entity.getHomeLongitude());
+        stmt.bindDouble(6, entity.getLocationAltitude());
     }
 
     @Override
@@ -120,8 +108,9 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // lineName
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // num
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // HomeLatitude
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // HomeLongitude
+            cursor.getDouble(offset + 3), // HomeLatitude
+            cursor.getDouble(offset + 4), // HomeLongitude
+            cursor.getFloat(offset + 5) // LocationAltitude
         );
         return entity;
     }
@@ -131,8 +120,9 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setLineName(cursor.getString(offset + 1));
         entity.setNum(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setHomeLatitude(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setHomeLongitude(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setHomeLatitude(cursor.getDouble(offset + 3));
+        entity.setHomeLongitude(cursor.getDouble(offset + 4));
+        entity.setLocationAltitude(cursor.getFloat(offset + 5));
      }
     
     @Override

@@ -19,6 +19,7 @@ public class ToastUtils {
     private static Handler mUIHandler = new Handler(Looper.getMainLooper());
 
     public static void showToast(final String msg) {
+
         mUIHandler.post(new Runnable() {
             @Override
             public void run() {

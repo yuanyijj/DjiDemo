@@ -3,6 +3,8 @@ package com.dji.test.demo.base;
 import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.multidex.MultiDex;
 
 import com.dji.test.demo.db.DaoMaster;
@@ -16,7 +18,7 @@ import dji.sdk.sdkmanager.DJISDKManager;
 public class MApplication extends Application {
 
     public static final String DB_NAME = "app.db";
-
+    public static Handler mFpvHandler;
     private static DaoSession mDaoSession;
 
     private static BaseProduct product= null;
@@ -33,6 +35,7 @@ public class MApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext=this;
+        mFpvHandler=new Handler(Looper.getMainLooper());
         initGreenDao();
     }
 

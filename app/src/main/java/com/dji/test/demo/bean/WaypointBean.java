@@ -32,12 +32,13 @@ public class WaypointBean {
 
     private String HeadingModeString;//兴趣点学习
 
+    private String picPath;//图片路径
 
 
-    @Generated(hash = 1549350071)
+    @Generated(hash = 2041434140)
     public WaypointBean(Long id, @NotNull String Uid, double Latitude,
             double Longitude, float DestinationHeight, String LocationAltitude,
-            String HeadingModeString) {
+            String HeadingModeString, String picPath) {
         this.id = id;
         this.Uid = Uid;
         this.Latitude = Latitude;
@@ -45,6 +46,7 @@ public class WaypointBean {
         this.DestinationHeight = DestinationHeight;
         this.LocationAltitude = LocationAltitude;
         this.HeadingModeString = HeadingModeString;
+        this.picPath = picPath;
     }
 
     @Generated(hash = 1682917225)
@@ -138,6 +140,14 @@ public class WaypointBean {
 
     public void setHeadingModeString(String HeadingModeString) {
         this.HeadingModeString = HeadingModeString;
+    }
+
+    public String getPicPath() {
+        return this.picPath;
+    }
+
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
     }
 }
 

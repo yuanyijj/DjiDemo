@@ -134,6 +134,12 @@
                 android:text="停止任务"/>
 
             <Button
+                android:id="@+id/btn_unlock_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="解锁地图"/>
+
+            <Button
                 android:id="@+id/route"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,13 +157,11 @@
                 android:layout_height="wrap_content"
                 android:text="保存航点"/>
 
-
-
             <Button
                 android:id="@+id/add_waypoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="添加航点"/>
+                android:text="航点学习"/>
 
         </LinearLayout>
 

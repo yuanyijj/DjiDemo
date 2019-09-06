@@ -31,6 +31,7 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
         public final static Property DestinationHeight = new Property(4, float.class, "DestinationHeight", false, "DESTINATION_HEIGHT");
         public final static Property LocationAltitude = new Property(5, String.class, "LocationAltitude", false, "LOCATION_ALTITUDE");
         public final static Property HeadingModeString = new Property(6, String.class, "HeadingModeString", false, "HEADING_MODE_STRING");
+        public final static Property PicPath = new Property(7, String.class, "picPath", false, "PIC_PATH");
     }
 
 
@@ -52,7 +53,8 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
                 "\"LONGITUDE\" REAL NOT NULL ," + // 3: Longitude
                 "\"DESTINATION_HEIGHT\" REAL NOT NULL ," + // 4: DestinationHeight
                 "\"LOCATION_ALTITUDE\" TEXT," + // 5: LocationAltitude
-                "\"HEADING_MODE_STRING\" TEXT);"); // 6: HeadingModeString
+                "\"HEADING_MODE_STRING\" TEXT," + // 6: HeadingModeString
+                "\"PIC_PATH\" TEXT);"); // 7: picPath
     }
 
     /** Drops the underlying database table. */
@@ -83,6 +85,11 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
         if (HeadingModeString != null) {
             stmt.bindString(7, HeadingModeString);
         }
+ 
+        String picPath = entity.getPicPath();
+        if (picPath != null) {
+            stmt.bindString(8, picPath);
+        }
     }
 
     @Override
@@ -107,6 +114,11 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
         if (HeadingModeString != null) {
             stmt.bindString(7, HeadingModeString);
         }
+ 
+        String picPath = entity.getPicPath();
+        if (picPath != null) {
+            stmt.bindString(8, picPath);
+        }
     }
 
     @Override
@@ -123,7 +135,8 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
             cursor.getDouble(offset + 3), // Longitude
             cursor.getFloat(offset + 4), // DestinationHeight
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // LocationAltitude
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // HeadingModeString
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // HeadingModeString
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // picPath
         );
         return entity;
     }
@@ -137,6 +150,7 @@ public class WaypointBeanDao extends AbstractDao<WaypointBean, Long> {
         entity.setDestinationHeight(cursor.getFloat(offset + 4));
         entity.setLocationAltitude(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setHeadingModeString(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setPicPath(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override

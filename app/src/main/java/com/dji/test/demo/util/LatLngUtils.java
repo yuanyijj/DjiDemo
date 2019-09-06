@@ -1,5 +1,7 @@
 package com.dji.test.demo.util;
 
+import com.amap.api.maps2d.CoordinateConverter;
+import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.services.core.LatLonPoint;
 
 import java.util.HashMap;
@@ -20,7 +22,7 @@ public class LatLngUtils {
      * 方法描述:方法可以将高德地图SDK获取到的GPS经纬度转换为真实的经纬度，可以用于解决安卓系统使用高德SDK获取经纬度的转换问题。
      */
     public static HashMap<String, Double> delta(double lat, double lon) {
-        LogUtil.v("LatLngUtils","转换前：lat="+lat+";lon="+lon);
+        LogUtil.v("LatLngUtils", "转换前：lat=" + lat + ";lon=" + lon);
         double a = 6378245.0;//克拉索夫斯基椭球参数长半轴a
         double ee = 0.00669342162296594323;//克拉索夫斯基椭球参数第一偏心率平方
         double dLat = transformLat(lon - 105.0, lat - 35.0);
@@ -34,7 +36,7 @@ public class LatLngUtils {
         HashMap<String, Double> hm = new HashMap<String, Double>();
         hm.put("lat", lat - dLat);
         hm.put("lon", lon - dLon);
-        LogUtil.v("LatLngUtils","转换后：lat="+hm.get("lat")+";lon="+hm.get("lon"));
+        LogUtil.v("LatLngUtils", "转换后：lat=" + hm.get("lat") + ";lon=" + hm.get("lon"));
         return hm;
     }
 
@@ -184,6 +186,22 @@ public class LatLngUtils {
         return d * Math.PI / 180.0;
     }
 
+
+    /**
+     * gps84坐标转换成高德坐标
+     */
+    static CoordinateConverter converter = null;
+
+    public static LatLng Gps84ToAmap(LatLng latLng) {
+        if (converter == null) {
+            converter = new CoordinateConverter();
+        }
+        converter.from(CoordinateConverter.CoordType.GPS);
+        // sourceLatLng待转换坐标点 DPoint类型
+        converter.coord(latLng);
+        // 执行转换操作
+        return converter.convert();
+    }
 
 
 }
