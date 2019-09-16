@@ -82,8 +82,8 @@
     <ScrollView
         android:id="@+id/ll_manage"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/signal"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signal">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -247,7 +247,41 @@
         android:layout_alignLeft="@+id/tv_test"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:text="转向角度"
         android:textColor="@color/white"
         android:textSize="20sp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="1"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            style="@style/CustomBlueSeekbarStyle"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_progress_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"/>
+    </LinearLayout>
+
 
 </RelativeLayout>

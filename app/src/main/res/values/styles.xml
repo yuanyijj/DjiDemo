@@ -35,5 +35,13 @@
         <item name="android:splitMotionEvents">false</item>
         <item name="android:fitsSystemWindows">true</item>
     </style>
-
+    <style name="CustomBlueSeekbarStyle">
+        <item name="android:maxHeight">6dp</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">@color/colorAccent</item>
+        <item name="android:progressDrawable">@drawable/customs_green_seekbar</item>
+        <item name="android:minHeight">6dp</item>
+        <item name="android:thumb">@drawable/shape_blue</item>
+        <item name="android:splitTrack">false</item>
+    </style>
 </resources>

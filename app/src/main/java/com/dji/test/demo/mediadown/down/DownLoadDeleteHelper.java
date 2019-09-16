@@ -19,9 +19,12 @@ import com.dji.test.demo.base.MApplication;
 import com.dji.test.demo.bean.DownMediaFile;
 import com.dji.test.demo.bean.MediaCheckBean;
 import com.dji.test.demo.bean.MediaRecyBean;
+import com.dji.test.demo.bean.WaypointBean;
+import com.dji.test.demo.bean.WaypointLineBean;
 import com.dji.test.demo.util.Constant;
 import com.dji.test.demo.util.DJIModuleVerificationUtil;
 import com.dji.test.demo.util.FileUtils;
+import com.dji.test.demo.util.GreendaoUtils;
 import com.dji.test.demo.util.LogUtil;
 import com.dji.test.demo.util.ToastUtils;
 
@@ -46,8 +49,8 @@ import dji.thirdparty.io.reactivex.schedulers.Schedulers;
 /**
  * $activityName
  *
- * @author LiuTao
- * @date 2018/11/23/023
+ * @author yuanyi
+ * @date 2019/09/03
  */
 
 
@@ -67,7 +70,8 @@ public class DownLoadDeleteHelper {
     private String TAG = "DownLoadDeleteHelper";
     public List<MediaFile> mThumMediaBenas;
     private DownloadMediaHandler mDownloadMediaHandler;
-
+    WaypointLineBean mWaypointLineBean;
+    List<WaypointBean> mWaypointBeanList;
     private DownLoadListener mDownLoadListener = null;
     private DeleteMediaListener mDeleteMediaListener = null;
     private AppCompatActivity mActivity;
@@ -84,10 +88,11 @@ public class DownLoadDeleteHelper {
         mDownLoadListener = downLoadListener;
     }
 
-    public DownLoadDeleteHelper(AppCompatActivity acticity, List<MediaFile> thumMediaBenas, DownLoadListener downLoadListener) {
+    public DownLoadDeleteHelper(AppCompatActivity acticity, List<MediaFile> thumMediaBenas, WaypointLineBean mWaypointLineBean, List<WaypointBean> mWaypointBeanList, DownLoadListener downLoadListener) {
         this.mActivity = acticity;
+        this.mWaypointLineBean = mWaypointLineBean;
         this.mThumMediaBenas = thumMediaBenas;
-        LogUtil.v(TAG,"mThumMediaBenas:"+mThumMediaBenas.size());
+        this.mWaypointBeanList = mWaypointBeanList;
         this.mDownLoadListener = downLoadListener;
     }
 
@@ -108,7 +113,7 @@ public class DownLoadDeleteHelper {
             MediaFile mediaFile = mThumMediaBenas.get(downIndex);
             idDownMediaIng = true;
             if (idDownMediaIng) {
-                LogUtil.v(TAG,"downLoadMediaFiles:mThumMediaBenas.size()="+mThumMediaBenas.size());
+
                 downLoadMediaFile(mediaFile, mThumMediaBenas.size(), mDownloadMediaHandler);
             }
         } else {
@@ -118,7 +123,7 @@ public class DownLoadDeleteHelper {
 
 
     private void downLoadMediaFile(MediaFile media, final int progressMax, DownloadMediaHandler downloadMediaHandler) {
-        LogUtil.v(TAG,"progressMax:"+progressMax);
+        LogUtil.v(TAG, "progressMax:" + progressMax);
         if (!idDownMediaIng) {
             return;
         }
@@ -142,7 +147,12 @@ public class DownLoadDeleteHelper {
             //文件夹路径
             String[] strings = media.getDateCreated().split(" ");
             File destDir = new File(FileUtils.getDir(Constant.mediaOrgCach));
-            media.fetchFileData(destDir, "org_" + strings[0] + "_" + strings[1].replace(":", "-") + "_", downloadMediaHandler);
+            WaypointBean waypointBean = mWaypointBeanList.get(downIndex);
+//            media.fetchFileData(destDir, "org_" + strings[0] + "_" + strings[1].replace(":", "-") + "_", downloadMediaHandler);
+            String path = mWaypointLineBean.getLineName() + "_" + waypointBean.getId() + "_";
+            waypointBean.setPicPath(path);
+            GreendaoUtils.getInstance().updataWaypoint(waypointBean);
+            media.fetchFileData(destDir, path, downloadMediaHandler);
         }
     }
 
@@ -229,7 +239,7 @@ public class DownLoadDeleteHelper {
                     }
                 });
             } else if (idDownMediaIng) {
-                LogUtil.v(TAG,"DownloadMediaHandler:onSuccess_mThumMediaBenas.size()="+mThumMediaBenas.size());
+                LogUtil.v(TAG, "onSuccess" + mThumMediaBenas.size());
                 final MediaFile mediaFile = mMediaFiles.get(downIndex);
                 downLoadMediaFile(mediaFile, mMediaFiles.size(), mDownloadMediaHandler);
             }
@@ -249,7 +259,6 @@ public class DownLoadDeleteHelper {
                 final MediaFile mediaFile = mMediaFiles.get(downIndex);
                 downLoadMediaFile(mediaFile, mMediaFiles.size(), mDownloadMediaHandler);
             }
-
         }
     }
 

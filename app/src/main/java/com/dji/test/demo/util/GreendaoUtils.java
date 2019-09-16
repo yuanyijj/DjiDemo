@@ -30,7 +30,7 @@ public class GreendaoUtils {
      * @return
      */
     public List<WaypointLineBean> getWaypointLinelisr() {
-        return DaoSession.getWaypointLineBeanDao().queryBuilder().orderAsc(WaypointLineBeanDao.Properties.Id).build().list();
+        return DaoSession.getWaypointLineBeanDao().queryBuilder().orderDesc(WaypointLineBeanDao.Properties.Id).build().list();
     }
 
 
