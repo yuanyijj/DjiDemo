@@ -59,8 +59,8 @@ public class MainActivity extends Activity {
                 upUI("REGISTRATION_SUCCESS");
                 //loginAccount();
                 //DJILog.e("App registration", DJISDKError.REGISTRATION_SUCCESS.getDescription());
-                DJISDKManager.getInstance().startConnectionToProduct();
-
+               boolean startConnection= DJISDKManager.getInstance().startConnectionToProduct();
+                upUI("startConnection："+startConnection);
                // checkDIJUserStatus(UserAccountManager.getInstance().getUserAccountState());
                 Toast.makeText(getApplicationContext(), "SDK registration succeeded!", Toast.LENGTH_LONG).show();
             } else {
@@ -100,7 +100,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void onInitProcess(DJISDKInitEvent event, int totalProcess) {
-
+            upUI(" onInitProcess");
         }
     };
 

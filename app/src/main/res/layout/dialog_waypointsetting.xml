@@ -17,8 +17,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
 
             <TextView
@@ -33,24 +33,41 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="高度:">
+                    android:text="高度:"
+                    android:visibility="gone">
                 </TextView>
 
                 <EditText
                     android:id="@+id/altitude"
                     android:layout_width="120dp"
                     android:layout_height="60dp"
-                    android:inputType="number|numberSigned">
+                    android:inputType="number|numberSigned"
+                    android:visibility="gone">
                 </EditText>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="参数："/>
+
+            <CheckBox
+                android:id="@+id/rb_absolute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="绝对高度"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -64,6 +81,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="速度:">
                 </TextView>
 
@@ -93,6 +111,7 @@
                         android:text="高"/>
                 </RadioGroup>
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -154,15 +173,15 @@
             <CheckBox
                 android:id="@+id/cb_shoot"
                 android:layout_width="wrap_content"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:text="是否拍照"/>
+                android:text="是否拍照"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <CheckBox
                     android:id="@+id/cb_rotate"
@@ -188,9 +207,9 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <CheckBox
                     android:id="@+id/cb_gimbal"

@@ -30,6 +30,7 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
         public final static Property HomeLatitude = new Property(3, double.class, "HomeLatitude", false, "HOME_LATITUDE");
         public final static Property HomeLongitude = new Property(4, double.class, "HomeLongitude", false, "HOME_LONGITUDE");
         public final static Property LocationAltitude = new Property(5, float.class, "LocationAltitude", false, "LOCATION_ALTITUDE");
+        public final static Property FlyNum = new Property(6, int.class, "flyNum", false, "FLY_NUM");
     }
 
 
@@ -50,7 +51,8 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
                 "\"NUM\" TEXT," + // 2: num
                 "\"HOME_LATITUDE\" REAL NOT NULL ," + // 3: HomeLatitude
                 "\"HOME_LONGITUDE\" REAL NOT NULL ," + // 4: HomeLongitude
-                "\"LOCATION_ALTITUDE\" REAL NOT NULL );"); // 5: LocationAltitude
+                "\"LOCATION_ALTITUDE\" REAL NOT NULL ," + // 5: LocationAltitude
+                "\"FLY_NUM\" INTEGER NOT NULL );"); // 6: flyNum
     }
 
     /** Drops the underlying database table. */
@@ -76,6 +78,7 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
         stmt.bindDouble(4, entity.getHomeLatitude());
         stmt.bindDouble(5, entity.getHomeLongitude());
         stmt.bindDouble(6, entity.getLocationAltitude());
+        stmt.bindLong(7, entity.getFlyNum());
     }
 
     @Override
@@ -95,6 +98,7 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
         stmt.bindDouble(4, entity.getHomeLatitude());
         stmt.bindDouble(5, entity.getHomeLongitude());
         stmt.bindDouble(6, entity.getLocationAltitude());
+        stmt.bindLong(7, entity.getFlyNum());
     }
 
     @Override
@@ -110,7 +114,8 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // num
             cursor.getDouble(offset + 3), // HomeLatitude
             cursor.getDouble(offset + 4), // HomeLongitude
-            cursor.getFloat(offset + 5) // LocationAltitude
+            cursor.getFloat(offset + 5), // LocationAltitude
+            cursor.getInt(offset + 6) // flyNum
         );
         return entity;
     }
@@ -123,6 +128,7 @@ public class WaypointLineBeanDao extends AbstractDao<WaypointLineBean, Long> {
         entity.setHomeLatitude(cursor.getDouble(offset + 3));
         entity.setHomeLongitude(cursor.getDouble(offset + 4));
         entity.setLocationAltitude(cursor.getFloat(offset + 5));
+        entity.setFlyNum(cursor.getInt(offset + 6));
      }
     
     @Override

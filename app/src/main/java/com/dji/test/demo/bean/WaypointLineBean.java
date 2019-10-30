@@ -20,11 +20,13 @@ public class WaypointLineBean implements Parcelable {
     private String num;//航点数量
 
 
-    private double   HomeLatitude;//起飞点纬度
+    private double HomeLatitude;//起飞点纬度
 
-    private double   HomeLongitude;//起飞点经度
+    private double HomeLongitude;//起飞点经度
 
-    private float   LocationAltitude;//起飞点水平高度
+    private float LocationAltitude;//起飞点水平高度   即海平面高度
+
+    private int flyNum;
 
     public double getHomeLatitude() {
         return HomeLatitude;
@@ -76,8 +78,11 @@ public class WaypointLineBean implements Parcelable {
         return "WaypointLineBean{" +
                 "id=" + id +
                 ", lineName='" + lineName + '\'' +
-                ", HomeLatitude='" + HomeLatitude + '\'' +
-                ", HomeLongitude='" + HomeLongitude + '\'' +
+                ", num='" + num + '\'' +
+                ", HomeLatitude=" + HomeLatitude +
+                ", HomeLongitude=" + HomeLongitude +
+                ", LocationAltitude=" + LocationAltitude +
+                ", flyNum=" + flyNum +
                 '}';
     }
 
@@ -104,6 +109,14 @@ public class WaypointLineBean implements Parcelable {
         dest.writeFloat(this.LocationAltitude);
     }
 
+    public int getFlyNum() {
+        return this.flyNum;
+    }
+
+    public void setFlyNum(int flyNum) {
+        this.flyNum = flyNum;
+    }
+
     protected WaypointLineBean(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.lineName = in.readString();
@@ -113,15 +126,16 @@ public class WaypointLineBean implements Parcelable {
         this.LocationAltitude = in.readFloat();
     }
 
-    @Generated(hash = 1230736907)
-    public WaypointLineBean(Long id, @NotNull String lineName, String num,
-            double HomeLatitude, double HomeLongitude, float LocationAltitude) {
+    @Generated(hash = 1114511569)
+    public WaypointLineBean(Long id, @NotNull String lineName, String num, double HomeLatitude,
+            double HomeLongitude, float LocationAltitude, int flyNum) {
         this.id = id;
         this.lineName = lineName;
         this.num = num;
         this.HomeLatitude = HomeLatitude;
         this.HomeLongitude = HomeLongitude;
         this.LocationAltitude = LocationAltitude;
+        this.flyNum = flyNum;
     }
 
     public static final Creator<WaypointLineBean> CREATOR = new Creator<WaypointLineBean>() {

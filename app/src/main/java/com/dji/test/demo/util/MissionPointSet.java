@@ -29,7 +29,6 @@ import java.util.List;
 import dji.common.mission.waypoint.Waypoint;
 import dji.common.mission.waypoint.WaypointAction;
 import dji.common.mission.waypoint.WaypointActionType;
-import dji.common.mission.waypoint.WaypointMissionFlightPathMode;
 
 /**
  * 航点相关设置
@@ -76,8 +75,11 @@ public class MissionPointSet {
         }
         View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_input_waypoint, null);
 
+        final TextView tv_Location = view.findViewById(R.id.tv_Location);
         final TextView tv_message = view.findViewById(R.id.tv_message);
-        tv_message.setText("纬度：" + mWaypoint.coordinate.getLatitude() + ";经度：" + mWaypoint.coordinate.getLongitude());
+        final TextView tv_waypoint_num = view.findViewById(R.id.tv_waypoint_num);
+        tv_Location.setText("纬度：" + mWaypoint.coordinate.getLatitude() + "\n经度：" + mWaypoint.coordinate.getLongitude());
+        tv_message.setText("航点"+idmarker);
 
         final EditText et_height = view.findViewById(R.id.et_height);
         et_height.setText(mWaypoint.altitude + "");
@@ -111,6 +113,7 @@ public class MissionPointSet {
         mActiveRecyclerview.setHasFixedSize(true);
         mActiveRecyclerview.setItemAnimator(new DefaultItemAnimator());
         mActiveRecyclerview.setNestedScrollingEnabled(false);
+        tv_waypoint_num.setText("动作："+mWaypoint.waypointActions.size());
         missionPointSetAdapter.setmOnItemDeleteClickListener(
                 new MissionPointSetAdapter.OnItemDeleteClickListener() {
                     @Override
@@ -118,6 +121,7 @@ public class MissionPointSet {
                         Log.e("位置", position + "");
                         mWaypoint.waypointActions.remove(position);
                         missionPointSetAdapter.setWaypoint(mWaypoint);
+                        tv_waypoint_num.setText("动作："+mWaypoint.waypointActions.size());
                         missionPointSetAdapter.notifyDataSetChanged();
                     }
                 });
@@ -128,7 +132,7 @@ public class MissionPointSet {
         mAddViewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mWaypoint.waypointActions.size() > 14) {
+                if (mWaypoint.waypointActions.size() >= 14) {
                     LogUtil.v("mAddViewBtn", "");
                     return;
                 }
@@ -136,6 +140,7 @@ public class MissionPointSet {
                 mWaypoint.waypointActions.add(waypointAction);//WaypointAction
                 LogUtil.e("additem=", "mActionList.size():" + mWaypoint.waypointActions.size());
                 missionPointSetAdapter.notifyDataSetChanged();
+                tv_waypoint_num.setText("动作："+mWaypoint.waypointActions.size());
                 mActiveRecyclerview.scrollToPosition(mWaypoint.waypointActions.size() - 1);
             }
         });

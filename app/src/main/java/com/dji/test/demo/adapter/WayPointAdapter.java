@@ -44,6 +44,7 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
     private ItemClickListener mItemClickListener;
     private ItemOnLongClickListener mItemOnLongClickListener;
     private OnItemDeleteClickListener mOnItemDeleteClickListener;
+    private OnDownLoadClickListener mOnDownLoadClickListener;
     private OnItemTypeSelectClickListener mOnItemTypeSelectClickListener = null;
     private OnItemInputEditListener mOnItemInputEditClickListener = null;
     private PopupWindow mActionTypePW;
@@ -63,8 +64,19 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
     }
 
     public interface OnItemDeleteClickListener {
-        void onItemDeleteClick( long position);
+        void onItemDeleteClick(int position, List<WaypointLineBean> list);
     }
+
+
+    //下载
+    public void setmDownLoadClickListener(OnDownLoadClickListener listener) {
+        this.mOnDownLoadClickListener = listener;
+    }
+
+    public interface OnDownLoadClickListener {
+        void onDownLoadClick(long position, List<WaypointLineBean> id);
+    }
+
 
     //动作类型添加
     public void setmOnItemTypeSelectClickListener(OnItemTypeSelectClickListener listener) {
@@ -98,6 +110,10 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
         this.mInflater = LayoutInflater.from(mContext);
     }
 
+    public void setWaypointActions(List<WaypointLineBean> waypointActions){
+        this.waypointActions = waypointActions;
+    }
+
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -110,14 +126,14 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, final int position) {
         holder.tv_name.setText("航线名称：" + waypointActions.get(position).getLineName());
+        StringBuffer tvNum = new StringBuffer();
         if (TextUtils.isEmpty(waypointActions.get(position).getNum())) {
-
-            holder.tv_num.setText("航点数量：0");
+            tvNum.append("航点数量：0");
         } else {
-            holder.tv_num.setText("航点数量：" + waypointActions.get(position).getNum());
-
+            tvNum.append("航点数量：" + waypointActions.get(position).getNum());
         }
-
+        tvNum.append("\n复飞次数：" + waypointActions.get(position).getFlyNum());
+        holder.tv_num.setText(tvNum.toString());
         holder.ll_waypoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +143,14 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
         holder.tv_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnItemDeleteClickListener.onItemDeleteClick(waypointActions.get(position).getId());
+                mOnItemDeleteClickListener.onItemDeleteClick(position, waypointActions);
+            }
+        });
+
+        holder.tv_dowon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnDownLoadClickListener.onDownLoadClick(position, waypointActions);
             }
         });
     }
@@ -143,6 +166,7 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
         TextView tv_num;
         TextView tv_name;
         TextView tv_delete;
+        TextView tv_dowon;
         LinearLayout ll_waypoint;
 
         public ItemViewHolder(View view) {
@@ -151,6 +175,7 @@ public class WayPointAdapter extends RecyclerView.Adapter<WayPointAdapter.ItemVi
             tv_name = (TextView) view.findViewById(R.id.tv_name);
             tv_num = (TextView) view.findViewById(R.id.tv_num);
             tv_delete = (TextView) view.findViewById(R.id.tv_delete);
+            tv_dowon = (TextView) view.findViewById(R.id.tv_dowon);
         }
     }
 }

@@ -88,12 +88,17 @@ public class DownLoadDeleteHelper {
         mDownLoadListener = downLoadListener;
     }
 
-    public DownLoadDeleteHelper(AppCompatActivity acticity, List<MediaFile> thumMediaBenas, WaypointLineBean mWaypointLineBean, List<WaypointBean> mWaypointBeanList, DownLoadListener downLoadListener) {
+    public DownLoadDeleteHelper(AppCompatActivity acticity,
+                                WaypointLineBean mWaypointLineBean,
+                                List<MediaFile> thumMediaBenas,
+                                List<WaypointBean> mWaypointBeanList,
+                                DownLoadListener downLoadListener) {
         this.mActivity = acticity;
         this.mWaypointLineBean = mWaypointLineBean;
-        this.mThumMediaBenas = thumMediaBenas;
+        this.mThumMediaBenas =  thumMediaBenas;
         this.mWaypointBeanList = mWaypointBeanList;
         this.mDownLoadListener = downLoadListener;
+        LogUtil.v(TAG,"mWaypointBeanList.size="+mWaypointBeanList.size()+"");
     }
 
 
@@ -113,7 +118,6 @@ public class DownLoadDeleteHelper {
             MediaFile mediaFile = mThumMediaBenas.get(downIndex);
             idDownMediaIng = true;
             if (idDownMediaIng) {
-
                 downLoadMediaFile(mediaFile, mThumMediaBenas.size(), mDownloadMediaHandler);
             }
         } else {
@@ -146,7 +150,9 @@ public class DownLoadDeleteHelper {
         if (DJIModuleVerificationUtil.isCameraModuleAvailable() && media != null) {
             //文件夹路径
             String[] strings = media.getDateCreated().split(" ");
-            File destDir = new File(FileUtils.getDir(Constant.mediaOrgCach));
+            File destDir = new File(FileUtils.getDir(Constant.mediaOrgCach
+                                                                +mWaypointLineBean.getLineName()+"_"
+                                                                +mWaypointLineBean.getFlyNum()+"/"));
             WaypointBean waypointBean = mWaypointBeanList.get(downIndex);
 //            media.fetchFileData(destDir, "org_" + strings[0] + "_" + strings[1].replace(":", "-") + "_", downloadMediaHandler);
             String path = mWaypointLineBean.getLineName() + "_" + waypointBean.getId() + "_";

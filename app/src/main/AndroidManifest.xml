@@ -89,7 +89,7 @@
         </activity>
 
 
-        <activity
+        <!--<activity
             android:name=".DJIConnectionControlActivity"
             android:theme="@android:style/Theme.Translucent">
             <intent-filter>
@@ -108,7 +108,7 @@
             <intent-filter>
                 <action android:name="com.dji.accessory.USB_ACCESSORY_ATTACHED"/>
             </intent-filter>
-        </receiver>
+        </receiver>-->
     </application>
 
 </manifest>

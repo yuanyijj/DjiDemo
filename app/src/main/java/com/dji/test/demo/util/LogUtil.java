@@ -23,12 +23,12 @@ import com.qx.wz.dj.rtcm.Constant;
 public class LogUtil {
     private static final long MAX_SIZE = 4 * 1024 * 1024; //文件上限大小
     private static final String LOCAL_PATH = Environment.getExternalStorageDirectory() + "/Android/data/com.dji.test.demo/common/";
+    private static final boolean IS_SHOW_LOGCAT = true;
+    private static final boolean IS_SHOW_LOGFILE = true;
     private static final String ERROR = "error.txt";
     private static final String LOG = "log.txt";//普通日志
     private static final String MSG = "msg.txt";//报文信息
     private static final String KEY = "key.txt";
-    private static final boolean IS_SHOW_LOGCAT = true;
-    private static final boolean IS_SHOW_LOGFILE = true;
 
     static {
         if (IS_SHOW_LOGFILE) {

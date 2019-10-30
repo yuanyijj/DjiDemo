@@ -24,7 +24,7 @@ android {
         }
     }
     greendao {
-        schemaVersion  3 //数据库版本号
+        schemaVersion  4 //数据库版本号
         daoPackage 'com.dji.test.demo.db'// 设置DaoMaster、DaoSession、Dao 包名
         targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
     }
@@ -69,7 +69,6 @@ android {
         doNotStrip "*/*/libDJIFlySafeCore.so"
         doNotStrip "*/*/libdjifs_jni.so"
         doNotStrip "*/*/libsfjni.so"
-
         pickFirst 'lib/*/libstlport_shared.so'
         pickFirst 'lib/*/libRoadLineRebuildAPI.so'
         pickFirst 'lib/*/libGNaviUtils.so'
@@ -93,8 +92,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'com.dji:dji-uxsdk:4.10'
-    compileOnly 'com.dji:dji-sdk-provided:4.10'
+        implementation 'com.dji:dji-uxsdk:4.10'
+        compileOnly 'com.dji:dji-sdk-provided:4.10'
+
+
 
     implementation 'com.amap.api:map2d:5.2.0'
     implementation 'com.amap.api:3dmap:6.8.0'
@@ -102,5 +103,5 @@ dependencies {
     implementation 'com.amap.api:location:4.6.0'
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.jakewharton:butterknife:8.8.1'
-
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
 }

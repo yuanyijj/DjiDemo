@@ -60,6 +60,7 @@ public class FPVActivity extends Activity {
         deviceWidth = displayMetrics.widthPixels;
         markerList=new ArrayList<>();
         mapWidget = findViewById(R.id.map_widget);
+        mapWidget.setAutoFrameMap(true);
         mapWidget.initAMap(new MapWidget.OnMapReadyListener() {
             @Override
             public void onMapReady(@NonNull final DJIMap map) {
@@ -73,6 +74,8 @@ public class FPVActivity extends Activity {
                         onViewClick(mapWidget);
                     }
                 });
+
+
 
 
 
