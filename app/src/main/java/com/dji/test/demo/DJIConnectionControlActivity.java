@@ -14,7 +14,7 @@ public class DJIConnectionControlActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(new View(this));
-
+//111111111111111
         Intent usbIntent = getIntent();
         if (usbIntent != null) {
             String action = usbIntent.getAction();
