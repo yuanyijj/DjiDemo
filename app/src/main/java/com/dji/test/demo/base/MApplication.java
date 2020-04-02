@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.multidex.MultiDex;
+
+import androidx.multidex.MultiDex;
 
 import com.dji.test.demo.db.DaoMaster;
 import com.dji.test.demo.db.DaoSession;

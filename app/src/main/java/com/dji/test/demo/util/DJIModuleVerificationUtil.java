@@ -1,6 +1,7 @@
 package com.dji.test.demo.util;
 
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.dji.test.demo.base.MApplication;
 

@@ -2,7 +2,6 @@ package com.dji.test.demo;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +11,8 @@ import android.view.animation.Transformation;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.amap.api.maps.AMap;
 import com.dji.mapkit.core.maps.DJIMap;
@@ -64,7 +65,7 @@ public class FPVActivity extends Activity {
         mapWidget.initAMap(new MapWidget.OnMapReadyListener() {
             @Override
             public void onMapReady(@NonNull final DJIMap map) {
-                map.setMapType(DJIMap.MapType.Normal);
+                map.setMapType(DJIMap.MapType.NORMAL);
                 Log.v(TAG, "地图初始化完成。。。");
                 map.setOnMapClickListener(new DJIMap.OnMapClickListener() {
                     @Override

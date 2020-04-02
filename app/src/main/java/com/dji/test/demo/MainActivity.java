@@ -6,9 +6,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -101,6 +102,11 @@ public class MainActivity extends Activity {
         @Override
         public void onInitProcess(DJISDKInitEvent event, int totalProcess) {
             upUI(" onInitProcess");
+        }
+
+        @Override
+        public void onDatabaseDownloadProgress(long l, long l1) {
+
         }
     };
 
